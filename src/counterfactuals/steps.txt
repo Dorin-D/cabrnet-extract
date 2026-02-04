@@ -1,6 +1,6 @@
 Steps:
 1. Clone git repository
-2. Build environment
+2. Build environment as per ./docs/manuals/install.md
 3. Download model with 
 	python3 tools/download_examples.py --target all
 4. Download CUB dataset with

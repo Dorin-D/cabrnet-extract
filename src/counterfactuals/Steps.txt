@@ -1,0 +1,8 @@
+Steps:
+1. Clone git repository
+2. Build environment
+3. Download model with 
+	python3 tools/download_examples.py --target all
+4. Download CUB dataset with
+	python3 tools/download_datasets.py --target CUB_200_2011 --output-dir ./data
+

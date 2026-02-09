@@ -245,6 +245,8 @@ class CaBRNet(nn.Module):
                 config_dict["similarity"] = {"name": "LegacyProtoPNetSimilarity"}
             elif config_dict["classifier"]["name"] == "ProtoTreeClassifier":
                 config_dict["similarity"] = {"name": "LegacyProtoTreeSimilarity"}
+            elif config_dict["classifier"]["name"] == "ExtractClassifier":
+                config_dict["similarity"] = {"name": "LegacyProtoTreeSimilarity"}
             else:
                 raise ValueError(
                     f"Unknown default similarity function for classifier {config_dict['classifier']['name']}"

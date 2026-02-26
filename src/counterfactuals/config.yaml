@@ -6,7 +6,7 @@ data:
 trainer:
   devices: 1
   max_epochs: 10
-  val_check_interval: 1
+  val_check_interval: 0.01
   accelerator: gpu
   precision: bf16-mixed
   gradient_clip_val: 1.0
@@ -38,7 +38,7 @@ model:
     class_path: diffusion_model.FlowMatcher
     init_args:
       upsample_dim: 64
-      hidden_dim: 128
+      hidden_dim: 64
       output_dim: 3
       strides: [1, 1, 1, 2]
       n_convs: [4, 4, 4, 4]

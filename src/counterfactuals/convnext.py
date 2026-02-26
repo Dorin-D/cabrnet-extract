@@ -21,9 +21,13 @@ class ConvNextBlock(nn.Module):
         dim (int): Number of input channels.
         layer_scale_init_value (float): Init value for Layer Scale. Default: 1e-6.
     """
-    def __init__(self, dim):
+    def __init__(self, dim, kernel_size=7):
         super().__init__()
-        self.dwconv = nn.Conv2d(dim, dim, kernel_size=7, padding=3, groups=dim) # depthwise conv
+        self.dwconv = nn.Conv2d(dim, 
+                                dim, 
+                                kernel_size=kernel_size, 
+                                padding=kernel_size // 2, 
+                                groups=dim) # depthwise conv
         self.norm = nn.LayerNorm(dim, eps=1e-6)
         self.pwconv1 = nn.Linear(dim, 4 * dim) # pointwise/1x1 convs, implemented with linear layers
         self.act = nn.GELU()

@@ -82,9 +82,9 @@ class LatentFlow(pl.LightningModule):
         epoch = self.current_epoch
         tensorboard = self.logger.experiment
         for j in range(n_show):
-            real_img = imgs[j].unsqueeze(0)
+            real_img = imgs[j]
             upsampled = upsampled_features[j].unsqueeze(0)
-            flow_img = self.flow_matcher.sample_image(upsampled)
+            flow_img = self.flow_matcher.sample_image(upsampled).squeeze(0)
             # Real image
             if epoch == 0:
                 tensorboard.add_image(
@@ -103,8 +103,8 @@ class LatentFlow(pl.LightningModule):
 
 
 if __name__ == "__main__":
-    # import os
-    # os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+    import os
+    os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 
     from pytorch_lightning.cli import LightningCLI
     LightningCLI(

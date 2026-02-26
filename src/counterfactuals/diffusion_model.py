@@ -75,6 +75,8 @@ class FlowMatcher(nn.Module):
                                     stride=1,
                                     padding=0)
         
+        self.output_dim = output_dim
+        
     def forward(self, x, y, t):
         # x (image) (B, output_dim, 224, 224)
         # y (upsampled features) (B, upsample_dim, 224, 224)

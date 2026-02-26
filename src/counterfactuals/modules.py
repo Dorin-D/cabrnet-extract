@@ -11,10 +11,11 @@ class DownsampleLayer(nn.Module):
                  stride: int = 1):
         super(DownsampleLayer, self).__init__()
         self.stride = stride
-        self.conv = nn.Conv2d(in_channels, 
-                              out_channels, 
-                              kernel_size, 
-                              stride=stride)
+        self.conv = nn.Conv2d(in_channels,
+                              out_channels,
+                              kernel_size,
+                              stride=stride,
+                              padding=kernel_size // 2)
         self.activation = nn.PReLU()
 
     def forward(self, x):
@@ -73,11 +74,11 @@ class EncoderBlock(nn.Module):
 
 class DecoderBlock(nn.Module):
 
-    def __init__(self, n_in, n_out, *, stride=1, up_kernel_size=None, n_convs=1):
+    def __init__(self, n_in, n_out, *, kernel_size=7, stride=1, up_kernel_size=None, n_convs=1):
         super(DecoderBlock, self).__init__()
 
         self.convs = nn.Sequential(*[
-            ConvNextBlock(n_out) for _ in range(n_convs)
+            ConvNextBlock(n_out, kernel_size=kernel_size) for _ in range(n_convs)
         ])
         
         self.up_conv = None
@@ -115,6 +116,7 @@ class LatentDecoder(nn.Module):
                 DecoderBlock(
                     n_in=hidden_dim,
                     n_out=hidden_dim,
+                    kernel_size=3,
                     stride=strides[i],
                     up_kernel_size=up_kernels[i],
                     n_convs=n_convs[i]

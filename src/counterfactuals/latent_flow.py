@@ -1,5 +1,5 @@
 # self note: libraries installed: pytorch_lightning, torchdyn, "-U ' jsonargparse[signatures]>=4.27.7' ", omegaconf, 
-
+# python src/counterfactuals/latent_flow.py fit --config src/counterfactuals/config_2.yaml
 
 import torch
 import pytorch_lightning as pl
@@ -103,8 +103,8 @@ class LatentFlow(pl.LightningModule):
 
 
 if __name__ == "__main__":
-    import os
-    os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+    # import os
+    # os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 
     from pytorch_lightning.cli import LightningCLI
     LightningCLI(

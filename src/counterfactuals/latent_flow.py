@@ -1,3 +1,6 @@
+# self note: libraries installed: pytorch_lightning, torchdyn, "-U ' jsonargparse[signatures]>=4.27.7' ", omegaconf, 
+
+
 import torch
 import pytorch_lightning as pl
 from modules import LatentDecoder
@@ -100,8 +103,8 @@ class LatentFlow(pl.LightningModule):
 
 
 if __name__ == "__main__":
-    import os
-    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+    # import os
+    # os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
     from pytorch_lightning.cli import LightningCLI
     LightningCLI(

@@ -1,4 +1,4 @@
-# self note: libraries installed: pytorch_lightning, torchdyn, "-U ' jsonargparse[signatures]>=4.27.7' ", omegaconf, 
+# self note: libraries installed: pytorch_lightning, torchdyn, "-U 'jsonargparse[signatures]>=4.27.7' ", omegaconf, 
 # python src/counterfactuals/latent_flow.py fit --config src/counterfactuals/config_2.yaml
 
 import torch

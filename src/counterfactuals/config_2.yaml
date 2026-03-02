@@ -26,16 +26,19 @@ trainer:
 
 model:
   decoder:
-    class_path: modules.LatentDecoder
+    class_path: modules.LatentDecoder # receives latent features 7x7x128 and outputs 224x224x64 z_{upsampled}
     init_args:
       input_dim: 256
-      hidden_dim: 64
-      output_dim: 64
-      strides: [2, 2, 2, 2, 2]
+      hidden_dim: 64 # iteratively decrease hidden dim
+      output_dim: 64 # should be smaller
+      strides: [2, 2, 2, 2, 2] # 7 * 2^5
       up_kernels: [3, 3, 3, 3, 3]
       n_convs: [2, 2, 2, 2, 2]
-  flow_matcher:
-    class_path: diffusion_model.FlowMatcher
+  flow_matcher: # UNet; 
+    class_path: diffusion_model.FlowMatcher # TAKES {z_{upsampled} ; noisy x_{input}, "velocity t"} -> generates appropiate image & "velocity field t-1"
+    # consider: larger decoder, simpler flow matcher
+    # stride 2 -> 1 ???
+
     init_args:
       upsample_dim: 64
       hidden_dim: 64

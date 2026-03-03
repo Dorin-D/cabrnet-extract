@@ -15,14 +15,14 @@ trainer:
       init_args:
         monitor: Val/Loss
         dirpath: ./logs/model/checkpoints
-        filename: latentflow
+        filename: latentflow_file_2
         save_top_k: 1
         save_last: true
   logger:
     class_path: pytorch_lightning.loggers.TensorBoardLogger
     init_args:
-      save_dir: ./logs/latentflow
-      name: latentflow
+      save_dir: ./logs/latentflow_dir_2
+      name: latentflow_name_2
 
 model:
   decoder:

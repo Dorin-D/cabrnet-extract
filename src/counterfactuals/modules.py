@@ -113,7 +113,7 @@ class LatentDecoder(nn.Module):
         hidden_dim_iterate = hidden_dim.copy() # we will be using this list to create the intermediate decoding blocks
         hidden_dim_iterate.insert(0, input_dim) # the input dimension is the first hidden dimension for our blocks
         self.decoder = nn.ModuleList()
-        for i in range(len(hidden_dim_iterate)):
+        for i in range(len(hidden_dim_iterate)-1):
             self.decoder.append(
                 DecoderBlock(
                     n_in=hidden_dim_iterate[0],

@@ -23,13 +23,20 @@ class GaussianFourierProjection(nn.Module):
 
 
 class FlowMatcher(nn.Module):
+    """
+    Has an encoder and a decoder, following the U-Net architecture.
+    Input:
+        noisy image (b,3,224,224) concat upsampled representation (b,c,224,224) of the latent representation of ProtoPNet. Upsampling done by a decoder architecture. 
+    Output:
+        the decoded image (b,3,224,224) from the latent representation.
+    """
     def __init__(
             self, 
             upsample_dim: int = 64,
             hidden_dim: int = 64,
             output_dim: int = 3, 
             *, 
-            strides: list[int] = [1, 2], 
+            strides: list[int] = [1, 1], 
             n_convs: list[int] = [5, 5],
             sigma_min: float = 1e-4,
         ):

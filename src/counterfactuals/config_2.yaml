@@ -26,11 +26,11 @@ trainer:
 
 model:
   decoder:
-    class_path: modules.LatentDecoder # receives latent features 7x7x128 and outputs 224x224x64 z_{upsampled}
+    class_path: modules.LatentDecoder # receives latent features 7x7x128 and outputs 224x224xc z_{upsampled}
     init_args:
       input_dim: 256
-      hidden_dim: 64 # iteratively decrease hidden dim
-      output_dim: 64 # should be smaller
+      hidden_dim: [128, 64, 32, 16, 8]
+      output_dim: 16
       strides: [2, 2, 2, 2, 2] # 7 * 2^5
       up_kernels: [3, 3, 3, 3, 3]
       n_convs: [2, 2, 2, 2, 2]
@@ -40,7 +40,7 @@ model:
     # stride 2 -> 1 ???
 
     init_args:
-      upsample_dim: 64
+      upsample_dim: 8
       hidden_dim: 64
       output_dim: 3
       strides: [1, 1, 1, 2]

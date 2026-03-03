@@ -62,7 +62,7 @@ class EncoderBlock(nn.Module):
             self.down_conv = DownsampleLayer(
                 n_in, n_out, down_kernel_size, stride=stride)
         else:
-            assert n_in == n_out
+            assert n_in == n_out # <- Why n_in has to be n_out?
 
 
     def forward(self, x):
@@ -78,7 +78,7 @@ class DecoderBlock(nn.Module):
         super(DecoderBlock, self).__init__()
 
         self.convs = nn.Sequential(*[
-            ConvNextBlock(n_out, kernel_size=kernel_size) for _ in range(n_convs)
+            ConvNextBlock(n_out, kernel_size=kernel_size) for _ in range(n_convs) # <- Shouldn't it be dim=n_in? => NO because first we upsample and then we do out
         ])
         
         self.up_conv = None
@@ -87,7 +87,7 @@ class DecoderBlock(nn.Module):
             self.up_conv = UpsampleLayer(
                 n_in, n_out, up_kernel_size, stride=stride)
         else:
-            assert n_in == n_out
+            assert n_in == n_out # <- Why n_in has to be n_out? 
 
 
     def forward(self, x):
@@ -101,7 +101,7 @@ class LatentDecoder(nn.Module):
     def __init__(
             self, 
             input_dim: int,
-            hidden_dim: int,
+            hidden_dim: list[int],
             output_dim: int, 
             *, 
             strides: list[int], 
@@ -110,12 +110,14 @@ class LatentDecoder(nn.Module):
         ):
         super(LatentDecoder, self).__init__()
 
+        hidden_dim_iterate = hidden_dim.copy() # we will be using this list to create the intermediate decoding blocks
+        hidden_dim_iterate.insert(0, input_dim) # the input dimension is the first hidden dimension for our blocks
         self.decoder = nn.ModuleList()
-        for i in range(len(strides)):
+        for i in range(len(hidden_dim_iterate)):
             self.decoder.append(
                 DecoderBlock(
-                    n_in=hidden_dim,
-                    n_out=hidden_dim,
+                    n_in=hidden_dim_iterate[0],
+                    n_out=hidden_dim_iterate[1],
                     kernel_size=3,
                     stride=strides[i],
                     up_kernel_size=up_kernels[i],
@@ -124,13 +126,13 @@ class LatentDecoder(nn.Module):
             )
 
         self.in_linear = nn.Conv2d(in_channels=input_dim,
-                                 out_channels=hidden_dim,
+                                 out_channels=hidden_dim_iterate[-1],
                                  kernel_size=1,
                                  stride=1,
                                  padding=0)
 
 
-        self.out_linear = nn.Conv2d(in_channels=hidden_dim,
+        self.out_linear = nn.Conv2d(in_channels=hidden_dim_iterate[-1],
                                     out_channels=output_dim,
                                     kernel_size=1,
                                     stride=1,

@@ -116,8 +116,8 @@ class LatentDecoder(nn.Module):
         for i in range(len(hidden_dim_iterate)-1):
             self.decoder.append(
                 DecoderBlock(
-                    n_in=hidden_dim_iterate[0],
-                    n_out=hidden_dim_iterate[1],
+                    n_in=hidden_dim_iterate[i],
+                    n_out=hidden_dim_iterate[i+1],
                     kernel_size=3,
                     stride=strides[i],
                     up_kernel_size=up_kernels[i],
@@ -126,7 +126,7 @@ class LatentDecoder(nn.Module):
             )
 
         self.in_linear = nn.Conv2d(in_channels=input_dim,
-                                 out_channels=hidden_dim_iterate[-1],
+                                 out_channels=hidden_dim_iterate[0],
                                  kernel_size=1,
                                  stride=1,
                                  padding=0)

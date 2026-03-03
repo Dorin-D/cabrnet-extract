@@ -40,7 +40,7 @@ model:
     # stride 2 -> 1 ???
 
     init_args:
-      upsample_dim: 8
+      upsample_dim: 16
       hidden_dim: 64
       output_dim: 3
       strides: [1, 1, 1, 2]
